@@ -3,6 +3,14 @@
         <title>BFR859</title>
     </head>
 <body>
+    {% for post in posts %}
+        <div>
+            <p> Published: {{post.published_date}}</p>
+            <h2> <a href="">{{post.title}}</a></p>
+            <p>{{ post.text|linebreaksbr }}</p>
+        </div>
+        {{post}}
+    {% endfor %}
     <p>Hi there!</p>
     <p>It works!</p>
 
