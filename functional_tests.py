@@ -17,6 +17,8 @@ class SiteTest(unittest.TestCase):
         #Connect to website
         self.browser.get("http://127.0.0.1:8000/cv")
 
+        #Check it is the right website
+        self.assertIn("CV", self.browser.title)
 
 
 
