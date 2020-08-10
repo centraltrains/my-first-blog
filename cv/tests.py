@@ -35,3 +35,25 @@ class CVPageTest(TestCase):
         self.assertEqual(CVrecord.objects.count(), 1)
         new_item = CVrecord.objects.first()
         self.assertEqual(new_item.name, "St Georges")
+
+    def test_edit_page_GET_request(self):
+         responce = self.client.get("/cv/5/edit")
+         self.assertTemplateUsed(responce, "edit.html")
+
+    def test_edit_page_edit(self):
+        form = PostCVrecord({
+            "record_type" : "education",
+            "name" : "St Georges",
+            "details" : "GCSEs: A*A*A*AABCD",
+            "start_date" :  "2010-01-01",
+            "end_date" :  "2010-01-01"})
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+
+        responce = self.client.get("/cv/1/edit")
+        self.assertTemplateUsed(responce, "edit.html")
+
+        self.assertIn("St Georges", responce.content.decode())
+        

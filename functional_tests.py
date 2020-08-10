@@ -74,6 +74,19 @@ class SiteTest(unittest.TestCase):
         self.assertIsNotNone(editLink)
         self.browser.get(editLink)
 
+        #Change GCSEs to A*********
+        header_text = self.browser.find_element_by_tag_name("h1").text
+        self.assertIn("Edit", header_text)
+        editNameInputBox = self.browser.find_element_by_id("input-name")
+        editDetailsInputBox = self.browser.find_element_by_id("education-input-details")
+        eduNameInputBox.send_keys(Keys.CONTROL, "a")
+        eduNameInputBox.send_keys(Keys.BACKSPACE)
+        eduNameInputBox.send_keys("GCSEs: A*******")
+
+        #Check edit
+        self.browser.get("http://127.0.0.1:8000/cv")
+        self.check_text_in_id("GCSEs: A*******", "education-table")
+
         self.fail("Finish the test")
 
 

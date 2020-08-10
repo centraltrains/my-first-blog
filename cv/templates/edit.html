@@ -1,0 +1,46 @@
+<html>
+
+    <head>
+
+    </head>
+
+    <body>
+        <h1>Edit</h1>
+
+        <div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <div>
+                    Record Type<br>
+                    <input type = "text" readonly = true  name = "record_type"  value="{{ entry.record_type }}" / >
+                </div>
+
+                <div>
+                    Name<br>
+                    <input  type = "text"   name = "name"        id = "input-name"      placeholder="Location" / value = "{{ entry.name }}">
+                </div>
+
+                <div>
+                    Details<br>
+                    <textarea               name = "details"     id = "input-details"   placeholder="Qualifications" >{{ entry.details }}</textarea>
+                </div>
+                
+                <div>
+                    Start Date<br>
+                    <input type = "date"    name = "start_date"  id = "input-start" value = "{{ entry.start_date|date:"Y-m-d" }}"/ >
+                </div>
+
+                <div>
+                    End Date<br>
+                     <input type = "date"    name = "end_date"    id = "input-end" value = "{{ entry.end_date|date:"Y-m-d" }}"/ >
+                </div>
+                
+                <button type="submit" class="save btn btn-default">Save</button>
+
+            </form>
+        </div>
+    </body>
+
+
+</html>
