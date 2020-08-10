@@ -5,6 +5,46 @@
     </head>
 
     <body>
+
+        <div>
+            <h2>Eduction</h2>
+            <table id = "education-table">
+                <tr>
+                    <th>Location</th>
+                    <th>Qualifications</th>
+                    <th>Started</th>
+                    <th>Completed</th>
+                </tr>
+                {% for log in eduLog %}
+                    <tr>
+                        <td>{{log.name}}</td>
+                        <td>{{log.details|linebreaksbr}}</td>
+                        <td>{{log.start_date|date:"b Y"|title}}</td>
+                        <td>{{log.end_date|date:"b Y"|title}}</td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+
+
+        <div>
+            
+            <form method="POST">
+                {% csrf_token %}
+                <input type = "hidden" name = "record_type"  value="education" / >
+                <input  type = "text"   name = "name"        id = "education-input-name"      placeholder="Location" / >
+                <textarea               name = "details"     id = "education-input-details"   placeholder="Qualifications" ></textarea>
+                <input type = "date"    name = "start_date"  id = "education-input-start" / >
+                <input type = "date"    name = "end_date"    id = "education-input-end" / >
+        
+                <button type="submit" class="save btn btn-default">Save</button>
+
+            </form>
+
+        </div>
+
+
     </body>
 
 </html>

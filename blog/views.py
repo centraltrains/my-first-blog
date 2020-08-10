@@ -16,9 +16,12 @@ def post_detail(request, pk):
     return render(request, "blog/post_detail.html", {"post":post})
 
 def post_new(request):
+    print(0)
     if request.method == "POST":
         form = PostForm(request.POST)
+        print(1)
         if form.is_valid():
+            print(2)
             post = form.save(commit=False)
             post.author = request.user
             post.published_date = timezone.now()
