@@ -10,9 +10,9 @@ def cv_home(request):
     if request.method == "POST":
         form = PostCVrecord(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
+            entry = form.save(commit=False)
             #post.author = request.user
-            post.save()
+            entry.save()
             return redirect('cv_home')
 
     eduLog = CVrecord.objects.filter(record_type="education")
@@ -20,10 +20,17 @@ def cv_home(request):
 
 
 def cv_edit(request, pk):
-    entry = get_object_or_404(CVrecord, pk=pk)
+    savedEntry = get_object_or_404(CVrecord, pk=pk)
 
-    form = PostCVrecord(instance=entry)
+    if request.method == "POST":
+        form = PostCVrecord(request.POST, instance = savedEntry)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            entry.save()
+            return redirect("cv_home")
+
+    form = PostCVrecord(instance=savedEntry)
 
 
-    return render(request, "edit.html", {"entry" : entry, "form" : form})
+    return render(request, "edit.html", {"entry" : savedEntry, "form" : form})
 
