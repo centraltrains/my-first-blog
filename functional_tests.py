@@ -78,14 +78,33 @@ class SiteTest(unittest.TestCase):
         header_text = self.browser.find_element_by_tag_name("h1").text
         self.assertIn("Edit", header_text)
         editNameInputBox = self.browser.find_element_by_id("input-name")
-        editDetailsInputBox = self.browser.find_element_by_id("education-input-details")
-        eduNameInputBox.send_keys(Keys.CONTROL, "a")
-        eduNameInputBox.send_keys(Keys.BACKSPACE)
-        eduNameInputBox.send_keys("GCSEs: A*******")
+        editDetailsInputBox = self.browser.find_element_by_id("input-details")
+        editDetailsInputBox.send_keys(Keys.CONTROL, "a")
+        editDetailsInputBox.send_keys(Keys.BACKSPACE)
+        editDetailsInputBox.send_keys("GCSEs: A*******")
+        editNameInputBox.send_keys(Keys.ENTER)
+
+        time.sleep(1)
 
         #Check edit
         self.browser.get("http://127.0.0.1:8000/cv")
         self.check_text_in_id("GCSEs: A*******", "education-table")
+
+        ##Find to edit again
+        editLink = self.get_link_from_listing("GCSEs: A*******", "education-table")
+        self.assertIsNotNone(editLink)
+        self.browser.get(editLink)
+        
+        #Delete
+        deleteButton = self.browser.find_element_by_id("delete-button")
+        link = deleteButton.find_elements_by_tag_name("a")
+        deleteUrl = link[0].get_attribute("href")
+        self.browser.get(deleteUrl)
+
+        #Check Delete
+        self.browser.get("http://127.0.0.1:8000/cv")
+        editLink = self.get_link_from_listing("GCSEs: A*******", "education-table")
+        self.assertIsNone(editLink)
 
         self.fail("Finish the test")
 

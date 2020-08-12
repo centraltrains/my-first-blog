@@ -51,5 +51,13 @@ class CVPageTest(TestCase):
 
         eddited_item = CVrecord.objects.first()
         self.assertEqual(eddited_item.details, "GCSEs: None")
+        self.assertEqual(responce.status_code, 302)
+
+    def test_delete_page_GET(self):
+        responce = self.client.post("/cv/", testData)
+        responce = self.client.get("/cv/1/delete")
+        self.assertEqual(responce.status_code, 302)
+        self.assertEqual(CVrecord.objects.count(), 0)
+
 
         

@@ -36,8 +36,8 @@
                      <input type = "date"    name = "end_date"    id = "input-end" value = "{{ entry.end_date|date:"Y-m-d" }}"/ >
                 </div>
                 
+                <div id="delete-button"><a href="../{{entry.pk}}/delete"> Delete</a></div>
                 <button type="submit" class="save btn btn-default">Save</button>
-
             </form>
         </div>
     </body>

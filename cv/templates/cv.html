@@ -22,7 +22,7 @@
                         <td>{{log.details|linebreaksbr}}</td>
                         <td>{{log.start_date|date:"b Y"|title}}</td>
                         <td>{{log.end_date|date:"b Y"|title}}</td>
-                        <td><a href="{{ forloop.counter }}/edit">Edit</a></td>
+                        <td><a href="{{ log.pk }}/edit">Edit</a></td>
                     </tr>
                 {% endfor %}
 

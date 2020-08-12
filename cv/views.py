@@ -34,3 +34,10 @@ def cv_edit(request, pk):
 
     return render(request, "edit.html", {"entry" : savedEntry, "form" : form})
 
+def cv_delete(request, pk):
+    savedEntry = get_object_or_404(CVrecord, pk=pk)
+    savedEntry.delete()
+
+    return redirect("cv_home")
+
+
