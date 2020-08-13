@@ -9,6 +9,15 @@ class SiteTest(unittest.TestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
 
+        #Login
+        self.browser.get("http://127.0.0.1:8000/admin")
+        username = self.browser.find_element_by_id("id_username")
+        password = self.browser.find_element_by_id("id_password")
+        username.send_keys("test")
+        password.send_keys("testworld")
+        password.send_keys(Keys.ENTER)
+        time.sleep(1)
+
     #def tearDown(self):
         #self.browser.quit()
 
@@ -35,60 +44,44 @@ class SiteTest(unittest.TestCase):
         
         return None
 
-
-    def test_website_connect(self):
-        testScope = "education"
-
-        #Connect to website
-        self.browser.get("http://127.0.0.1:8000/admin")
-        username = self.browser.find_element_by_id("id_username")
-        password = self.browser.find_element_by_id("id_password")
-        username.send_keys("test")
-        password.send_keys("testworld")
-        password.send_keys(Keys.ENTER)
-        time.sleep(1)
+    def inital_tests(self):
         self.browser.get("http://127.0.0.1:8000/cv")
-
         #Check it is the right website
         self.assertIn("CV", self.browser.title)
 
-        #Find an input box for education
-        eduNameInputBox = self.browser.find_element_by_id(testScope + "-input-name")
-        eduDetailsInputBox = self.browser.find_element_by_id(testScope + "-input-details")
-        eduStartInputBox = self.browser.find_element_by_id(testScope + "-input-start")
-        eduEndInputBox = self.browser.find_element_by_id(testScope + "-input-end")
+    
+    def add_record(self, testScope, dataToInput, checkField):
+        self.browser.get("http://127.0.0.1:8000/cv")
+
+        #Add data into fields
+        for k, v in dataToInput.items():
+            inputBox = self.browser.find_element_by_id(testScope + "-input-" + k)
+            inputBox.send_keys(v)
+
+
         saveButton = self.browser.find_element_by_id(testScope + "-save")
-
-
-        #Add a new education event
-        eduNameInputBox.send_keys("St George's")
-        eduDetailsInputBox.send_keys("GCSEs: A*A*A*AABCD")
-        eduEndInputBox.send_keys("2017-01-01")
-        eduStartInputBox.send_keys("2017-01-01")
-        #Send
-        #eduNameInputBox.send_keys(Keys.ENTER)
         saveButton.click()
         time.sleep(1)
 
         #Check
-        self.check_text_in_id("GCSEs: A*A*A*AABCD", testScope + "-table")
+        
+        self.check_text_in_id(dataToInput[checkField], testScope + "-table")
 
-        #Edit
-        editLink = self.get_link_from_listing("GCSEs: A*A*A*AABCD", testScope + "-table")
+    def edit_record(self, testScope, getTerm, editData, checkField):
+         #Edit
+        editLink = self.get_link_from_listing(getTerm, testScope + "-table")
         self.assertIsNotNone(editLink)
         self.browser.get(editLink)
 
-        #Change GCSEs to A*********
-        header_text = self.browser.find_element_by_tag_name("h1").text
-        self.assertIn("Edit", header_text)
-        editNameInputBox = self.browser.find_element_by_id("input-name")
-        editDetailsInputBox = self.browser.find_element_by_id("input-details")
-        saveButton = self.browser.find_element_by_id("save")
-        editDetailsInputBox.send_keys(Keys.CONTROL, "a")
-        editDetailsInputBox.send_keys(Keys.BACKSPACE)
-        editDetailsInputBox.send_keys("GCSEs: A*******")
+        #Replace terms
+        for k, v in editData.items():
+            inputBox = self.browser.find_element_by_id("input-" + k)
+            inputBox.send_keys(Keys.CONTROL, "a")
+            inputBox.send_keys(Keys.BACKSPACE)
+            inputBox.send_keys(v)
 
-        #editNameInputBox.send_keys(Keys.ENTER)
+        
+        saveButton = self.browser.find_element_by_id("save")
         saveButton.click()
 
 
@@ -96,10 +89,11 @@ class SiteTest(unittest.TestCase):
 
         #Check edit
         self.browser.get("http://127.0.0.1:8000/cv")
-        self.check_text_in_id("GCSEs: A*******", testScope + "-table")
+        self.check_text_in_id(editData[checkField], testScope + "-table")
 
+    def delete_record(self, testScope, getTerm):
         ##Find to edit again
-        editLink = self.get_link_from_listing("GCSEs: A*******", testScope + "-table")
+        editLink = self.get_link_from_listing(getTerm, testScope + "-table")
         self.assertIsNotNone(editLink)
         self.browser.get(editLink)
         
@@ -111,11 +105,18 @@ class SiteTest(unittest.TestCase):
 
         #Check Delete
         self.browser.get("http://127.0.0.1:8000/cv")
-        editLink = self.get_link_from_listing("GCSEs: A*******", testScope + "-table")
+        editLink = self.get_link_from_listing(getTerm, testScope + "-table")
         self.assertIsNone(editLink)
 
-        self.fail("Finish the test")
+    def test_education_add(self):
 
+        self.inital_tests()
+
+        self.add_record("education", {"name" : "St George's", "details" : "GCSEs: A*A*A*AABCD", "start" : "2017-01-01", "end" : "2017-01-01"}, "details")
+        self.edit_record("education", "GCSEs: A*A*A*AABCD", {"details" : "GCSEs: A*******"}, "details")
+        self.delete_record("education", "GCSEs: A*******")
+
+        self.fail("Finish the test")
 
 
 if __name__ == '__main__':
