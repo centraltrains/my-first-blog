@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+
+{% block admin_banner %}
+    {% if user.is_authenticated %}
+        <div class="command-banner">
+            <a class="command-button" href="{% url 'post_new' %}" class="top-menu">New Post</a>
+            {% block command-buttons %}
+            {% endblock %}
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+{% endblock %}

@@ -20,14 +20,13 @@ def cv_home(request):
             entry.save()
             return redirect('cv_home')
 
-    education = CVrecord.objects.filter(record_type="education").order_by("-start_date")
-    headInfo = CVrecord.objects.filter(record_type="headInfo")
-    work = CVrecord.objects.filter(record_type="work").order_by("-start_date")
-
-    data = {"education" : education, 
-            "headInfo" : headInfo, 
-            "work" : work}
-    return render(request, "cv.html", data)
+    data = {"education" : CVrecord.objects.filter(record_type="education").order_by("-start_date"), 
+            "headInfo" : CVrecord.objects.filter(record_type="headInfo"), 
+            "work" : CVrecord.objects.filter(record_type="work").order_by("-start_date"),
+            "projects" : CVrecord.objects.filter(record_type="projects").order_by("-start_date"),
+            "skills" : CVrecord.objects.filter(record_type="skills"), 
+            }
+    return render(request, "cv/cv.html", data)
 
 
 def cv_edit(request, pk):
@@ -43,7 +42,7 @@ def cv_edit(request, pk):
     form = PostCVrecord(instance=savedEntry)
 
 
-    return render(request, "edit.html", {"entry" : savedEntry, "form" : form})
+    return render(request, "cv/edit.html", {"entry" : savedEntry, "form" : form})
 
 def cv_delete(request, pk):
     savedEntry = get_object_or_404(CVrecord, pk=pk)

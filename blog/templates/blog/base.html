@@ -6,7 +6,9 @@
 
        <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">-->
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <link rel="stylesheet" href="{% static 'css/general.css' %}">
+        <link rel="stylesheet" href="{% static 'css/banner.css' %}">
+        {% block css %} {% endblock %}
     </head>
 
 <body>
@@ -14,19 +16,16 @@
     <div class="page-header">
         <h1><a href="/">BFR859</a></h1>
     </div>
-    {% if user.is_authenticated %}
     <div class="command-banner">
-        <a class="command-button" href="{% url 'post_new' %}" class="top-menu">New Post</a>
-        {% block command-buttons %}
-        {% endblock %}
+        <a class="command-button" href="/" class="top-menu">Blog</a>
+        <a class="command-button" href="/cv" class="top-menu">CV</a>
     </div>
-    {% endif %}
+    {% block admin_banner %} {% endblock %}
 
     <div class="content container">
         <div class="row">
             <div class="col-md-8">
-                {% block content %}
-                {% endblock %}
+                {% block content %} {% endblock %}
             </div>
         </div>
     </div>

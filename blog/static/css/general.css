@@ -1,0 +1,13 @@
+* {
+    margin: 0px 0px 0px 0px;
+    font-family:Acorn;
+}
+
+@font-face {
+	font-family:Acorn;
+	src:url(https://pert.is/fonts/Arcon-Regular.otf);
+}
+
+a, a:hover, a:active, a:visited {
+    text-decoration: none;
+}

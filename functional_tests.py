@@ -128,9 +128,10 @@ class SiteTest(unittest.TestCase):
         self.edit_record("projects", "nothing", {"details" : "Roblox Game lockdown project! yay!"}, "details")
         self.delete_record("projects", "Roblox Game lockdown project! yay!")
 
+        self.add_record("skills", {"name" : "Java", "details" : "1/10"}, "details")
+        self.edit_record("skills", "1/10", {"details" : "2/10"}, "details")
+        self.delete_record("skills", "2/10")
 
-
-        self.fail("Finish the test")
 
 
 if __name__ == '__main__':

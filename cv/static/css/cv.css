@@ -1,3 +1,59 @@
+* {
+    margin: 0px 0px 0px 0px;
+    font-family:Acorn;
+}
+
+@font-face {
+	font-family:Acorn;
+	src:url(https://pert.is/fonts/Arcon-Regular.otf);
+}
+
+a, a:hover, a:active, a:visited {
+    text-decoration: none;
+}
+
+
+/*HEADER*/
+.page-header {
+    background-color: #9a25c4;
+    padding: 10px 0px 10px 5px;
+    text-align:center;
+}
+
+.page-header, .page-header a, .page-header a:visited, .page-header a:active {
+    font-size: 48pt;
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Arcon';
+    font-weight: bolder;
+}
+
+/*ADMIN PAGE BANNER*/
+
+.command-banner {
+    padding: 2px;
+}
+
+.command-button {
+    padding: 2px 5px 2px 5px;
+}
+
+.command-button:hover {
+    background-color: #651881;
+}
+
+.command-banner {
+    background-color: #7a1e9c;
+    text-align: left;
+    color: #ffffff;
+}
+
+.command-banner a, command-banner a:visited, command-banner a:active, command-banner a:hover {
+    color: #ffffff;
+    font-family: 'Arcon';
+    font-size: 18pt;
+
+}
 
 /* POST DISPLAY */
 .post {
@@ -107,3 +163,6 @@
     display: block;
 }
 
+
+.save {
+}
