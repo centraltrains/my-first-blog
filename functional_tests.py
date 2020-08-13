@@ -18,7 +18,7 @@ class SiteTest(unittest.TestCase):
         password.send_keys(Keys.ENTER)
         time.sleep(1)
 
-    #def tearDown(self):
+    def tearDown(self):
         self.browser.quit()
 
     def check_text_in_id(self, text, id):
