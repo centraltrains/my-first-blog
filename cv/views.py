@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.utils import timezone
 from .models import CVrecord
 from .forms import PostCVrecord
@@ -9,16 +9,17 @@ from .forms import PostCVrecord
 def cv_home(request):
 
     if request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
         postData = request.POST.copy()
         postData["start_date"] = postData.get("start_date", timezone.now().strftime("%Y-%m-%d"))
         postData["end_date"] = postData.get("end_date", timezone.now().strftime("%Y-%m-%d"))
         postData["name"] = postData.get("name", ".")
         postData["details"] = postData.get("details", ".")
 
-        print(postData)
         form = PostCVrecord(postData)
         if form.is_valid():
-            print("add")
             entry = form.save(commit=False)
             #post.author = request.user
             entry.save()
@@ -35,6 +36,9 @@ def cv_home(request):
 
 
 def cv_edit(request, pk):
+    if not request.user.is_authenticated:
+        return HttpResponseForbidden()
+
     savedEntry = get_object_or_404(CVrecord, pk=pk)
 
     if request.method == "POST":
@@ -50,6 +54,9 @@ def cv_edit(request, pk):
     return render(request, "cv/edit.html", {"entry" : savedEntry, "form" : form})
 
 def cv_delete(request, pk):
+    if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+
     savedEntry = get_object_or_404(CVrecord, pk=pk)
     savedEntry.delete()
 

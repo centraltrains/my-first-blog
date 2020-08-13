@@ -16,7 +16,7 @@ class CVPageTest(TestCase):
     
     def test_display_template(self):
         responce = self.client.get("/cv/")
-        self.assertTemplateUsed(responce, "cv.html")
+        self.assertTemplateUsed(responce, "cv/cv.html")
 
     def test_can_save_education_POST_request(self):
         responce = self.client.post("/cv/", data = testData)
@@ -28,7 +28,7 @@ class CVPageTest(TestCase):
     def test_edit_page_GET_request(self):
         responce = self.client.post("/cv/", data = testData)
         responce = self.client.get("/cv/1/edit")
-        self.assertTemplateUsed(responce, "edit.html")
+        self.assertTemplateUsed(responce, "cv/edit.html")
 
     def test_edit_page_GET(self):
         form = PostCVrecord(testData)
@@ -38,7 +38,7 @@ class CVPageTest(TestCase):
             post.save()
 
         responce = self.client.get("/cv/1/edit")
-        self.assertTemplateUsed(responce, "edit.html")
+        self.assertTemplateUsed(responce, "cv/edit.html")
 
     def test_edit_page_POST(self):
         responce = self.client.post("/cv/", testData)
