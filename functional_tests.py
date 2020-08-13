@@ -19,7 +19,7 @@ class SiteTest(unittest.TestCase):
         time.sleep(1)
 
     #def tearDown(self):
-        #self.browser.quit()
+        self.browser.quit()
 
     def check_text_in_id(self, text, id):
         table = self.browser.find_element_by_id(id)
