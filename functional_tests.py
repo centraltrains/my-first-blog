@@ -116,6 +116,12 @@ class SiteTest(unittest.TestCase):
         self.edit_record("education", "GCSEs: A*A*A*AABCD", {"details" : "GCSEs: A*******"}, "details")
         self.delete_record("education", "GCSEs: A*******")
 
+        self.add_record("headInfo", {"details" : "Benjamin Roughtoon",}, "details")
+        self.edit_record("headInfo", "Benjamin Roughtoon", {"details" : "Benjamin Roughton"}, "details")
+        self.delete_record("headInfo", "Benjamin Roughton")
+
+
+
         self.fail("Finish the test")
 
 

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.utils import timezone
 from .models import CVrecord
 from .forms import PostCVrecord
 
@@ -8,7 +9,11 @@ from .forms import PostCVrecord
 def cv_home(request):
 
     if request.method == "POST":
-        form = PostCVrecord(request.POST)
+        postData = request.POST.copy()
+        postData["start_date"] = postData.get("start_date", timezone.now().strftime("%Y-%m-%d"))
+        postData["end_date"] = postData.get("end_date", timezone.now().strftime("%Y-%m-%d"))
+
+        form = PostCVrecord(postData)
         if form.is_valid():
             entry = form.save(commit=False)
             #post.author = request.user
@@ -16,7 +21,8 @@ def cv_home(request):
             return redirect('cv_home')
 
     eduLog = CVrecord.objects.filter(record_type="education")
-    return render(request, "cv.html", {"eduLog" : eduLog})
+    headInfo = CVrecord.objects.filter(record_type="headInfo")
+    return render(request, "cv.html", {"eduLog" : eduLog, "headInfo" : headInfo})
 
 
 def cv_edit(request, pk):
