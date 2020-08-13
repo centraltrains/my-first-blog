@@ -20,9 +20,14 @@ def cv_home(request):
             entry.save()
             return redirect('cv_home')
 
-    eduLog = CVrecord.objects.filter(record_type="education")
+    education = CVrecord.objects.filter(record_type="education").order_by("-start_date")
     headInfo = CVrecord.objects.filter(record_type="headInfo")
-    return render(request, "cv.html", {"eduLog" : eduLog, "headInfo" : headInfo})
+    work = CVrecord.objects.filter(record_type="work").order_by("-start_date")
+
+    data = {"education" : education, 
+            "headInfo" : headInfo, 
+            "work" : work}
+    return render(request, "cv.html", data)
 
 
 def cv_edit(request, pk):

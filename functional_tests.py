@@ -120,6 +120,14 @@ class SiteTest(unittest.TestCase):
         self.edit_record("headInfo", "Benjamin Roughtoon", {"details" : "Benjamin Roughton"}, "details")
         self.delete_record("headInfo", "Benjamin Roughton")
 
+        self.add_record("work", {"name" : "Nowhere Ltd", "details" : "Nothing", "start" : "1999-01-01", "end" : "2020-01-01"}, "details")
+        self.edit_record("work", "Nothing", {"details" : "Still Nothing"}, "details")
+        self.delete_record("work", "Still Nothing")
+
+        self.add_record("projects", {"name" : "Bloxy Bingo", "details" : "nothing", "start" : "2020-06-01", "end" : "2020-08-01"}, "details")
+        self.edit_record("projects", "nothing", {"details" : "Roblox Game lockdown project! yay!"}, "details")
+        self.delete_record("projects", "Roblox Game lockdown project! yay!")
+
 
 
         self.fail("Finish the test")
