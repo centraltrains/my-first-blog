@@ -37,6 +37,7 @@ class SiteTest(unittest.TestCase):
 
 
     def test_website_connect(self):
+        testScope = "education"
 
         #Connect to website
         self.browser.get("http://127.0.0.1:8000/admin")
@@ -52,10 +53,12 @@ class SiteTest(unittest.TestCase):
         self.assertIn("CV", self.browser.title)
 
         #Find an input box for education
-        eduNameInputBox = self.browser.find_element_by_id("education-input-name")
-        eduDetailsInputBox = self.browser.find_element_by_id("education-input-details")
-        eduStartInputBox = self.browser.find_element_by_id("education-input-start")
-        eduEndInputBox = self.browser.find_element_by_id("education-input-end")
+        eduNameInputBox = self.browser.find_element_by_id(testScope + "-input-name")
+        eduDetailsInputBox = self.browser.find_element_by_id(testScope + "-input-details")
+        eduStartInputBox = self.browser.find_element_by_id(testScope + "-input-start")
+        eduEndInputBox = self.browser.find_element_by_id(testScope + "-input-end")
+        saveButton = self.browser.find_element_by_id(testScope + "-save")
+
 
         #Add a new education event
         eduNameInputBox.send_keys("St George's")
@@ -63,14 +66,15 @@ class SiteTest(unittest.TestCase):
         eduEndInputBox.send_keys("2017-01-01")
         eduStartInputBox.send_keys("2017-01-01")
         #Send
-        eduNameInputBox.send_keys(Keys.ENTER)
+        #eduNameInputBox.send_keys(Keys.ENTER)
+        saveButton.click()
         time.sleep(1)
 
         #Check
-        self.check_text_in_id("GCSEs: A*A*A*AABCD", "education-table")
+        self.check_text_in_id("GCSEs: A*A*A*AABCD", testScope + "-table")
 
         #Edit
-        editLink = self.get_link_from_listing("GCSEs: A*A*A*AABCD", "education-table")
+        editLink = self.get_link_from_listing("GCSEs: A*A*A*AABCD", testScope + "-table")
         self.assertIsNotNone(editLink)
         self.browser.get(editLink)
 
@@ -79,19 +83,23 @@ class SiteTest(unittest.TestCase):
         self.assertIn("Edit", header_text)
         editNameInputBox = self.browser.find_element_by_id("input-name")
         editDetailsInputBox = self.browser.find_element_by_id("input-details")
+        saveButton = self.browser.find_element_by_id("save")
         editDetailsInputBox.send_keys(Keys.CONTROL, "a")
         editDetailsInputBox.send_keys(Keys.BACKSPACE)
         editDetailsInputBox.send_keys("GCSEs: A*******")
-        editNameInputBox.send_keys(Keys.ENTER)
+
+        #editNameInputBox.send_keys(Keys.ENTER)
+        saveButton.click()
+
 
         time.sleep(1)
 
         #Check edit
         self.browser.get("http://127.0.0.1:8000/cv")
-        self.check_text_in_id("GCSEs: A*******", "education-table")
+        self.check_text_in_id("GCSEs: A*******", testScope + "-table")
 
         ##Find to edit again
-        editLink = self.get_link_from_listing("GCSEs: A*******", "education-table")
+        editLink = self.get_link_from_listing("GCSEs: A*******", testScope + "-table")
         self.assertIsNotNone(editLink)
         self.browser.get(editLink)
         
@@ -103,7 +111,7 @@ class SiteTest(unittest.TestCase):
 
         #Check Delete
         self.browser.get("http://127.0.0.1:8000/cv")
-        editLink = self.get_link_from_listing("GCSEs: A*******", "education-table")
+        editLink = self.get_link_from_listing("GCSEs: A*******", testScope + "-table")
         self.assertIsNone(editLink)
 
         self.fail("Finish the test")
