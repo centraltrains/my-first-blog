@@ -11,11 +11,19 @@
 <div class="cv_block">
     <h2>Details</h2>
     <table id = "headInfo-table">
+        <thead>
+            <tr>
+                <th id ="details_details"></th>
+                {% if user.is_authenticated %}
+                <th></th>
+                {% endif %}
+            </tr>
+        </thead>
 
         <tbody>
             {% for log in headInfo %}
                 <tr>
-                    <td id="details_details">{{log.details|linebreaksbr}}</td>
+                    <td>{{log.details|linebreaksbr}}</td>
                     {% if user.is_authenticated %}
                         <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
                     {% endif %}
@@ -134,10 +142,18 @@
 <div class="cv_block">
     <h2>Technical Skills</h2>
     <table id = "skills-table">
+        <thead>
+            <tr>
+                <th id ="sk_detail"></th>
+                {% if user.is_authenticated %}
+                <th></th>
+                {% endif %}
+            </tr>
+        </thead>
         <tbody>
             {% for log in skills %}
                 <tr>
-                    <td id ="sk_detail">
+                    <td>
                         <div class="skill_name">{{log.name}}</div>
                         <div class="skill_detail">{{log.details|linebreaksbr}}</div>
                     </td>
@@ -166,9 +182,17 @@
 
 <div class="cv_block_top"></div>
 <div class="cv_block">
-    <h2>Projects</h2>
-    <tbody>
-        <table id = "projects-table">
+    <h2>Projects</h2>        
+    <table id = "projects-table">
+        <thead>
+            <tr>
+                <th id ="pj_details"></th>
+                {% if user.is_authenticated %}
+                <th></th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
             {% for log in projects %}
                 <tr>
                     <td id ="pj_details">

@@ -90,10 +90,6 @@
 
 /* SPECIFIC WIDTHS */
 
-#details_details {
-    width:100%;
-}
-
 #ed_loc {
     width:10%;
     font-weight: bold;
@@ -119,7 +115,7 @@
     width:10%;
 }
 
-#sk_detail, #pj_details {
+#details_details, #sk_detail, #pj_details {
     width:100%;
 }
 
