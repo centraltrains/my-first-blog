@@ -12,20 +12,25 @@ def cv_home(request):
         postData = request.POST.copy()
         postData["start_date"] = postData.get("start_date", timezone.now().strftime("%Y-%m-%d"))
         postData["end_date"] = postData.get("end_date", timezone.now().strftime("%Y-%m-%d"))
+        postData["name"] = postData.get("name", ".")
+        postData["details"] = postData.get("details", ".")
 
+        print(postData)
         form = PostCVrecord(postData)
         if form.is_valid():
+            print("add")
             entry = form.save(commit=False)
             #post.author = request.user
             entry.save()
             return redirect('cv_home')
 
-    data = {"education" : CVrecord.objects.filter(record_type="education").order_by("-start_date"), 
+    data = {"education" : CVrecord.objects.filter(record_type="education").order_by("-end_date"), 
             "headInfo" : CVrecord.objects.filter(record_type="headInfo"), 
-            "work" : CVrecord.objects.filter(record_type="work").order_by("-start_date"),
-            "projects" : CVrecord.objects.filter(record_type="projects").order_by("-start_date"),
+            "work" : CVrecord.objects.filter(record_type="work").order_by("-end_date"),
+            "projects" : CVrecord.objects.filter(record_type="projects").order_by("-end_date"),
             "skills" : CVrecord.objects.filter(record_type="skills"), 
             }
+
     return render(request, "cv/cv.html", data)
 
 

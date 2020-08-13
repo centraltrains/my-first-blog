@@ -1,46 +1,44 @@
-<html>
+{% extends "cv/cv_base.html" %}
 
-    <head>
-
-    </head>
-
-    <body>
+{% block content %}
+    <div class="cv_block_top"></div>
+    <div class="cv_title_block">
         <h1>Edit</h1>
+    </div>
 
-        <div>
+    <div class="edit_options">
+        
+        <form method="POST">
+            {% csrf_token %}
+            <div class="edit_option">
+                Record Type<br>
+                <input type = "text" readonly = true  name = "record_type"  value="{{ entry.record_type }}" / >
+            </div>
+
+            <div class="edit_option">
+                Name<br>
+                <input  type = "text"   name = "name"        id = "input-name"      placeholder="Location" / value = "{{ entry.name }}">
+            </div>
+
+            <div class="edit_option">
+                Details<br>
+                <textarea rows="6"     name = "details"     id = "input-details"   placeholder="Qualifications" >{{ entry.details }}</textarea>
+            </div>
             
-            <form method="POST">
-                {% csrf_token %}
-                <div>
-                    Record Type<br>
-                    <input type = "text" readonly = true  name = "record_type"  value="{{ entry.record_type }}" / >
-                </div>
+            <div class="edit_option">
+                Start Date<br>
+                <input type = "date"    name = "start_date"  id = "input-start" value = "{{ entry.start_date|date:"Y-m-d" }}"/ >
+            </div>
 
-                <div>
-                    Name<br>
-                    <input  type = "text"   name = "name"        id = "input-name"      placeholder="Location" / value = "{{ entry.name }}">
-                </div>
-
-                <div>
-                    Details<br>
-                    <textarea               name = "details"     id = "input-details"   placeholder="Qualifications" >{{ entry.details }}</textarea>
-                </div>
-                
-                <div>
-                    Start Date<br>
-                    <input type = "date"    name = "start_date"  id = "input-start" value = "{{ entry.start_date|date:"Y-m-d" }}"/ >
-                </div>
-
-                <div>
-                    End Date<br>
-                     <input type = "date"    name = "end_date"    id = "input-end" value = "{{ entry.end_date|date:"Y-m-d" }}"/ >
-                </div>
-                
-                <div id="delete-button"><a href="../{{entry.pk}}/delete"> Delete</a></div>
-                <button type="submit" class="save-button" id="save">Save</button>
-            </form>
-        </div>
-    </body>
-
-
-</html>
+            <div class="edit_option">
+                End Date<br>
+                <input type = "date"    name = "end_date"    id = "input-end" value = "{{ entry.end_date|date:"Y-m-d" }}"/ >
+            </div>
+            
+            <div class="edit_option_buttons">
+                    <div class="delete_button" id="delete-button"><a href="../{{entry.pk}}/delete"><div class="edit_page_delete_button">Delete</div></a></div>
+                    <div class="edit_save_button"><button type="submit" class="save-button" id="save">Save</button></div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

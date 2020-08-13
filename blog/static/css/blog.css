@@ -35,22 +35,6 @@
 
 }
 
-/* FOOTER */
-.footer {
-    background-color: #651881;
-    padding: 2px 0px 2px 0px;
-    text-align: center;
-}
-
-.footer a, footer a:visited, footer a:active, footer a:hover {
-    color: #ffffff;
-    font-family: 'Arcon';
-    text-align: center;
-    text-decoration: none;
-    font-size: 14pt;
-
-}
-
 .post-form textarea, .post-form input {
     width: 100%;
 }
