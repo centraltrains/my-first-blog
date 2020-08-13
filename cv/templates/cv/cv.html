@@ -16,19 +16,23 @@
             {% for log in headInfo %}
                 <tr>
                     <td id="details_details">{{log.details|linebreaksbr}}</td>
-                    <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
 
-            <form method="POST">
-                {% csrf_token %}
-                <input type = "hidden" name = "record_type"  value="headInfo" / >
-                <tr class="add_row">
-                    <td><textarea name = "details" id = "headInfo-input-details" rows ="4" placeholder="Information"></textarea></td>
-                    <td class="save_cell"><button type="submit" class="save-button" id="headInfo-save">Add</button></td>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name = "record_type"  value="headInfo" / >
+                    <tr class="add_row">
+                        <td><textarea name = "details" id = "headInfo-input-details" rows ="4" placeholder="Information"></textarea></td>
+                        <td class="save_cell"><button type="submit" class="save-button" id="headInfo-save">Add</button></td>
 
-                </tr>
-            </form>
+                    </tr>
+                </form>
+            {% endif %}
         </tbody>
 
     </table>
@@ -40,34 +44,44 @@
 <div class="cv_block">
     <h2>Eduction</h2>
     <table id = "education-table">
-        <tr>
-            <th id="ed_loc">Location</th>
-            <th id="ed_qual">Qualifications</th>
-            <th id="ed_time">Time</th>
-            <th>Admin</th>
-        </tr>
-        {% for log in education %}
+        <thead>
             <tr>
-                <td id="ed_loc">{{log.name}}</td>
-                <td id="ed_qual">{{log.details|linebreaksbr}}</td>
-                <td id="ed_time">{{log.start_date|date:"b Y"|title}} - {{log.end_date|date:"b Y"|title}}</td>
-                <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                <th id="ed_loc">Location</th>
+                <th id="ed_qual">Qualifications</th>
+                <th id="ed_time">Time</th>
+                {% if user.is_authenticated %}
+                    <th>Admin</th>
+                {% endif %}
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for log in education %}
+                <tr>
+                    <td id="ed_loc">{{log.name}}</td>
+                    <td id="ed_qual">{{log.details|linebreaksbr}}</td>
+                    <td id="ed_time">{{log.start_date|date:"b Y"|title}} - {{log.end_date|date:"b Y"|title}}</td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <input type = "hidden" name = "record_type"  value="education" / >
-            <tr class="add_row">
-                <td><input  type = "text"   name = "name"        id = "education-input-name"      placeholder="Location" / ></td>
-                <td><textarea rows ="1"     name = "details"     id = "education-input-details"   placeholder="Qualifications"  ></textarea></td>
-                <td>
-                    <div class="stacked_input"><input type = "date"    name = "start_date"  id = "education-input-start" / ></div>
-                    <div class="stacked_input"><input type = "date"    name = "end_date"    id = "education-input-end" / ></div>
-                </td>
-                <td class="save_cell"><button type="submit" class="save-button" id="education-save">Add</button></td>
-            </tr>
-        </form>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name = "record_type"  value="education" / >
+                    <tr class="add_row">
+                        <td><input  type = "text"   name = "name"        id = "education-input-name"      placeholder="Location" / ></td>
+                        <td><textarea rows ="1"     name = "details"     id = "education-input-details"   placeholder="Qualifications"  ></textarea></td>
+                        <td>
+                            <div class="stacked_input"><input type = "date"    name = "start_date"  id = "education-input-start" / ></div>
+                            <div class="stacked_input"><input type = "date"    name = "end_date"    id = "education-input-end" / ></div>
+                        </td>
+                        <td class="save_cell"><button type="submit" class="save-button" id="education-save">Add</button></td>
+                    </tr>
+                </form>
+            {% endif %}
+        </tbody>
     </table>
 </div>
 
@@ -75,34 +89,44 @@
 <div class="cv_block">
     <h2>Experience</h2>
     <table id = "work-table">
-        <tr>
-            <th id="wk_loc">Location</th>
-            <th id="wk_pos">Position</th>
-            <th id="wk_time">Time</th>
-            <th>Admin</th>
-        </tr>
-        {% for log in work %}
+        <thead>
             <tr>
-                <td id="wk_loc">{{log.name}}</td>
-                <td id="wk_pos">{{log.details|linebreaksbr}}</td>
-                <td id="wk_time">{{log.start_date|date:"b Y"|title}} - {{log.end_date|date:"b Y"|title}}</td>
-                <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                <th id="wk_loc">Location</th>
+                <th id="wk_pos">Position</th>
+                <th id="wk_time">Time</th>
+                {% if user.is_authenticated %}
+                    <th>Admin</th>
+                {% endif %}
             </tr>
-        {% endfor %}
+        </thead>
+        <tbody>
+            {% for log in work %}
+                <tr>
+                    <td id="wk_loc">{{log.name}}</td>
+                    <td id="wk_pos">{{log.details|linebreaksbr}}</td>
+                    <td id="wk_time">{{log.start_date|date:"b Y"|title}} - {{log.end_date|date:"b Y"|title}}</td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <input type = "hidden" name = "record_type"  value="work" / >
-            <tr class="add_row">
-                <td><input  type = "text"   name = "name"        id = "work-input-name"      placeholder="Location" / ></td>
-                <td><textarea rows ="1"     name = "details"     id = "work-input-details"   placeholder="Position" ></textarea></td>
-                <td>
-                    <div class="stacked_input"><input type = "date"    name = "start_date"  id = "work-input-start" / ></div>
-                    <div class="stacked_input"><input type = "date"    name = "end_date"    id = "work-input-end" / ></div>
-                </td>
-                <td class="save_cell"><button type="submit" class="save-button" id="work-save">Add</button></td>
-            </tr>
-        </form>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name = "record_type"  value="work" / >
+                    <tr class="add_row">
+                        <td><input  type = "text"   name = "name"        id = "work-input-name"      placeholder="Location" / ></td>
+                        <td><textarea rows ="1"     name = "details"     id = "work-input-details"   placeholder="Position" ></textarea></td>
+                        <td>
+                            <div class="stacked_input"><input type = "date"    name = "start_date"  id = "work-input-start" / ></div>
+                            <div class="stacked_input"><input type = "date"    name = "end_date"    id = "work-input-end" / ></div>
+                        </td>
+                        <td class="save_cell"><button type="submit" class="save-button" id="work-save">Add</button></td>
+                    </tr>
+                </form>
+            {% endif %}
+        </tbody>
     </table>
 </div>
 
@@ -110,57 +134,71 @@
 <div class="cv_block">
     <h2>Technical Skills</h2>
     <table id = "skills-table">
-        {% for log in skills %}
-            <tr>
-                <td id ="sk_detail">
-                    <div class="skill_name">{{log.name}}</div>
-                    <div class="skill_detail">{{log.details|linebreaksbr}}</div>
-                </td>
-                <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
-            </tr>
-        {% endfor %}
+        <tbody>
+            {% for log in skills %}
+                <tr>
+                    <td id ="sk_detail">
+                        <div class="skill_name">{{log.name}}</div>
+                        <div class="skill_detail">{{log.details|linebreaksbr}}</div>
+                    </td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <input type = "hidden" name = "record_type"  value="skills" / >
-            <tr class="add_row">
-                <td>
-                    <div class="stacked_input"><input  type = "text"   name = "name"        id = "skills-input-name"      placeholder="Skill" / ></div>
-                    <div class="stacked_input"><textarea rows ="2"     name = "details"     id = "skills-input-details"   placeholder="Details" ></textarea></div>
-                </td>
-                <td class="save_cell"><button type="submit" class="save-button" id="skills-save">Add</button></td>
-            </tr>
-        </form>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name = "record_type"  value="skills" / >
+                    <tr class="add_row">
+                        <td>
+                            <div class="stacked_input"><input  type = "text"   name = "name"        id = "skills-input-name"      placeholder="Skill" / ></div>
+                            <div class="stacked_input"><textarea rows ="2"     name = "details"     id = "skills-input-details"   placeholder="Details" ></textarea></div>
+                        </td>
+                        <td class="save_cell"><button type="submit" class="save-button" id="skills-save">Add</button></td>
+                    </tr>
+                </form>
+            {% endif %}
+        </tbody>
     </table>
 </div>
 
 <div class="cv_block_top"></div>
 <div class="cv_block">
     <h2>Projects</h2>
-    <table id = "projects-table">
-        {% for log in projects %}
-            <tr>
-                <td id ="pj_details">
-                    <div class="project_name">{{log.name}}</div>
-                    <div class="project_dec">{{log.details|linebreaksbr}}</div>
-                    <div class="project_time">{{log.start_date|date:"b Y"|title}} - {{log.end_date|date:"b Y"|title}}</div></td>
-                <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
-            </tr>
-        {% endfor %}
+    <tbody>
+        <table id = "projects-table">
+            {% for log in projects %}
+                <tr>
+                    <td id ="pj_details">
+                        <div class="project_name">{{log.name}}</div>
+                        <div class="project_dec">{{log.details|linebreaksbr}}</div>
+                        <div class="project_time">{{log.start_date|date:"b Y"|title}} - {{log.end_date|date:"b Y"|title}}</div>
+                    </td>
+                    {% if user.is_authenticated %}
+                        <td><a href="{{ log.pk }}/edit"><div class="edit_wrapper"><div class="edit_button">Edit</div></div></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <input type = "hidden" name = "record_type"  value="projects" / >
-            <tr class="add_row">
-                <td>
-                <div class="stacked_input"><input  type = "text"   name = "name"        id = "projects-input-name"      placeholder="Project" / ></div>
-                <div class="stacked_input"><textarea rows ="3"     name = "details"     id = "projects-input-details"   placeholder="Description" ></textarea></div>
-                <div class="stacked_input"><input type = "date"    name = "start_date"  id = "projects-input-start" / ></div>
-                <div class="stacked_input"><input type = "date"    name = "end_date"    id = "projects-input-end" / ></div></td>
-                <td class="save_cell"><button type="submit" class="save-button" id="projects-save">Add</button></td>
-            </tr>
-        </form>
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type = "hidden" name = "record_type"  value="projects" / >
+                    <tr class="add_row">
+                        <td>
+                        <div class="stacked_input"><input  type = "text"   name = "name"        id = "projects-input-name"      placeholder="Project" / ></div>
+                        <div class="stacked_input"><textarea rows ="3"     name = "details"     id = "projects-input-details"   placeholder="Description" ></textarea></div>
+                        <div class="stacked_input"><input type = "date"    name = "start_date"  id = "projects-input-start" / ></div>
+                        <div class="stacked_input"><input type = "date"    name = "end_date"    id = "projects-input-end" / ></div></td>
+                        <td class="save_cell"><button type="submit" class="save-button" id="projects-save">Add</button></td>
+                    </tr>
+                </form>
+            {% endif %}
+        </tbody>
     </table>
 </div>
+
 
 {% endblock %}

@@ -15,8 +15,8 @@ def cv_home(request):
         postData = request.POST.copy()
         postData["start_date"] = postData.get("start_date", timezone.now().strftime("%Y-%m-%d"))
         postData["end_date"] = postData.get("end_date", timezone.now().strftime("%Y-%m-%d"))
-        postData["name"] = postData.get("name", ".")
-        postData["details"] = postData.get("details", ".")
+        postData["name"] = postData.get("name", "⠀")
+        postData["details"] = postData.get("details", "⠀")
 
         form = PostCVrecord(postData)
         if form.is_valid():
